@@ -15,6 +15,10 @@ public class Pumpkin : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        Move();
+    }
+
+    void Move() {
         var horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput != 0) {
             rb.velocity = new Vector2(horizontalInput * horizontalMoveSpeed * Time.fixedDeltaTime, rb.velocity.y);

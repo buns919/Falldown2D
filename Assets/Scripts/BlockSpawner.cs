@@ -11,6 +11,9 @@ public class BlockSpawner : MonoBehaviour {
 
     private bool enableWaveSpawn = true;
 
+    /**
+     * Continuously spawn rows on start
+     */
     private IEnumerator Start() {
         // start spawing waves until we're told to stop
         do {
@@ -19,19 +22,21 @@ public class BlockSpawner : MonoBehaviour {
         while (enableWaveSpawn);
     }
 
-
+    /**
+     * Spawn number of blocks per row, then destroy a random number of blocks for the player to fall through
+     */
     IEnumerator SpawnRow() {
         Vector3 spawnLocationVector = transform.position;
-
         List<GameObject> blocks = new List<GameObject>();
 
+        // Create instances of blocks at the correct location.
         for (int i = 0; i < numBlocksPerRow; i++) {
             var instance = Instantiate(blockPrefab, spawnLocationVector, Quaternion.identity) as GameObject;
             blocks.Add(instance);
             spawnLocationVector = new Vector3(spawnLocationVector.x + 1, spawnLocationVector.y, spawnLocationVector.z);
         }
 
-        // Destroy between 1 and 3 blocks so the player can fall down
+        // Destroy between 1 and maxNumBlocksToRemove so the player can fall down
         int numBlocksToRemove = Random.Range(1, maxNumBlocksToRemove);
         for (int i = 0; i < numBlocksToRemove; i++) {
             // pick a random index and destroy it
