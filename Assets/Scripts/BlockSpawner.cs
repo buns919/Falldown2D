@@ -7,8 +7,7 @@ public class BlockSpawner : MonoBehaviour {
     [SerializeField] private float secondsBetweenRowSpawns = 4f;
     [SerializeField] private GameObject blockPrefab;
     [SerializeField] private int numBlocksPerRow = 9;
-    [SerializeField] private float moveUpSpeed = 10f;
-    
+    [SerializeField] private int maxNumBlocksToRemove = 3;
 
     private bool enableWaveSpawn = true;
 
@@ -32,7 +31,14 @@ public class BlockSpawner : MonoBehaviour {
             spawnLocationVector = new Vector3(spawnLocationVector.x + 1, spawnLocationVector.y, spawnLocationVector.z);
         }
 
-        // TODO: Destroy between 1 and 3 blocks so the player can fall down
+        // Destroy between 1 and 3 blocks so the player can fall down
+        int numBlocksToRemove = Random.Range(1, maxNumBlocksToRemove);
+        for (int i = 0; i < numBlocksToRemove; i++) {
+            // pick a random index and destroy it
+            int indexToDestroy = Random.Range(0, blocks.Count - 1);
+            Destroy(blocks[indexToDestroy]);
+            blocks.Remove(blocks[indexToDestroy]);
+        }
 
         yield return new WaitForSeconds(secondsBetweenRowSpawns);
     }

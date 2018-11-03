@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 
+    [SerializeField] private float verticalMoveSpeed = 1f;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,6 +13,7 @@ public class Block : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        Vector3 moveVector = Vector3.up * (Time.deltaTime * verticalMoveSpeed);
+        transform.Translate(moveVector);
+    }
 }
